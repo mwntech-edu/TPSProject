@@ -39,4 +39,5 @@ public:
 	FVector direction;
 	void InputHorizontal(float value);
 	void InputVertical(float vlaue);
+	void InputJump();
 };

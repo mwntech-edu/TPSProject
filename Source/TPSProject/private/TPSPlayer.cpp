@@ -41,6 +41,9 @@ void ATPSPlayer::InputHorizontal(float value) {
 void ATPSPlayer::InputVertical(float value) {
 	direction.X = value;
 }
+void ATPSPlayer::InputJump() {
+	Jump();
+}
 // Called to bind functionality to input
 void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -49,15 +52,18 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
+	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ATPSPlayer::InputJump);
 }
 // Called every frame
 void ATPSPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FVector P0 = GetActorLocation();
+	direction = FTransform(GetControlRotation()).TransformVector(direction);
+	/*FVector P0 = GetActorLocation();
 	FVector vt = direction * walkSpeed * DeltaTime;
 	FVector P = P0 + vt;
-	SetActorLocation(P);
+	SetActorLocation(P);*/
+	AddMovementInput(direction);
 	direction = FVector::ZeroVector;
 }
 // Called when the game starts or when spawned
