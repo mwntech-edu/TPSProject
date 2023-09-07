@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+﻿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -13,5 +13,6 @@ UCLASS()
 class TPSPROJECT_API ATPSProjectGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	ATPSProjectGameModeBase();
 };
