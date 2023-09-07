@@ -35,14 +35,31 @@ void ATPSPlayer::Turn(float value) {
 void ATPSPlayer::LookUp(float value) {
 	AddControllerPitchInput(value);
 }
+void ATPSPlayer::InputHorizontal(float value) {
+	direction.Y = value;
+}
+void ATPSPlayer::InputVertical(float value) {
+	direction.X = value;
+}
 // Called to bind functionality to input
 void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATPSPlayer::Turn);
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
+	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
+	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 }
-
+// Called every frame
+void ATPSPlayer::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	FVector P0 = GetActorLocation();
+	FVector vt = direction * walkSpeed * DeltaTime;
+	FVector P = P0 + vt;
+	SetActorLocation(P);
+	direction = FVector::ZeroVector;
+}
 // Called when the game starts or when spawned
 void ATPSPlayer::BeginPlay()
 {
@@ -50,11 +67,6 @@ void ATPSPlayer::BeginPlay()
 	
 }
 
-// Called every frame
-void ATPSPlayer::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
-}
 
 
