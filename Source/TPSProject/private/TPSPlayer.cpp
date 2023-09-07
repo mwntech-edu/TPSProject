@@ -28,6 +28,7 @@ ATPSPlayer::ATPSPlayer()
 	tpsCamComp->bUsePawnControlRotation = false;
 
 	bUseControllerRotationYaw = true;
+	JumpMaxCount = 2;
 }
 void ATPSPlayer::Turn(float value) {
 	AddControllerYawInput(value);
@@ -54,10 +55,7 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ATPSPlayer::InputJump);
 }
-// Called every frame
-void ATPSPlayer::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+void ATPSPlayer::Move() {
 	direction = FTransform(GetControlRotation()).TransformVector(direction);
 	/*FVector P0 = GetActorLocation();
 	FVector vt = direction * walkSpeed * DeltaTime;
@@ -65,6 +63,13 @@ void ATPSPlayer::Tick(float DeltaTime)
 	SetActorLocation(P);*/
 	AddMovementInput(direction);
 	direction = FVector::ZeroVector;
+}
+
+// Called every frame
+void ATPSPlayer::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	Move();
 }
 // Called when the game starts or when spawned
 void ATPSPlayer::BeginPlay()
