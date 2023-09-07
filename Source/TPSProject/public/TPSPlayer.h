@@ -30,4 +30,7 @@ public:
 		class USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class UCameraComponent* tpsCamComp;
+
+	void Turn(float value);
+	void LookUp(float value);
 };

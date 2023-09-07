@@ -21,8 +21,26 @@ ATPSPlayer::ATPSPlayer()
 	springArmComp->SetupAttachment(RootComponent);
 	springArmComp->SetRelativeLocation(FVector(0, 70, 90));
 	springArmComp->TargetArmLength = 400;
+	springArmComp->bUsePawnControlRotation = true;
+
 	tpsCamComp = CreateDefaultSubobject<UCameraComponent>(TEXT("TpsCamComp"));
 	tpsCamComp->SetupAttachment(springArmComp);
+	tpsCamComp->bUsePawnControlRotation = false;
+
+	bUseControllerRotationYaw = true;
+}
+void ATPSPlayer::Turn(float value) {
+	AddControllerYawInput(value);
+}
+void ATPSPlayer::LookUp(float value) {
+	AddControllerPitchInput(value);
+}
+// Called to bind functionality to input
+void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATPSPlayer::Turn);
+	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
 }
 
 // Called when the game starts or when spawned
@@ -39,10 +57,4 @@ void ATPSPlayer::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
 
