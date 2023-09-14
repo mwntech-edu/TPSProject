@@ -4,7 +4,7 @@
 #include "TPSPlayer.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-
+#include "Bullet.h"
 // Sets default values
 ATPSPlayer::ATPSPlayer()
 {
@@ -62,6 +62,11 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ATPSPlayer::InputJump);
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
+}
+void ATPSPlayer::InputFire() {
+	FTransform firePosition = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
+	GetWorld()->SpawnActor<ABullet>(bulletFactory, firePosition);
 }
 void ATPSPlayer::Move() {
 	direction = FTransform(GetControlRotation()).TransformVector(direction);
