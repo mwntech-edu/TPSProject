@@ -27,15 +27,42 @@ ABullet::ABullet()
 	movementComp->MaxSpeed = 5000;
 	movementComp->bShouldBounce = true;
 	movementComp->Bounciness = 0.3f;
+	//InitialLifeSpan = 2.0f;
+}
+void LambdaTestFunc() {
+	//auto lambdaFunc = []()->void { UE_LOG(LogTemp, Warning, TEXT("Lambda test"))};
+	int32 sum = 10;
+	auto lambdaFunc = [&sum](int number)->void { 
+		sum += number;
+		//UE_LOG(LogTemp, Warning, TEXT("Lambda test"))
+	};
+
+	lambdaFunc(20);
+	UE_LOG(LogTemp, Warning, TEXT("sum : %d"), sum);
 }
 
 // Called when the game starts or when spawned
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	LambdaTestFunc();
+	FTimerHandle deathTimer;
+	//GetWorld()->GetTimerManager().SetTimer(deathTimer, this, &ABullet::Die, 2.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(
+		deathTimer, 
+		FTimerDelegate::CreateLambda(
+				[this]()->void 
+				{ 
+						Destroy(); 
+				}
+		), 
+		2.0f, 
+		false
+	);
 }
-
+void ABullet::Die() {
+	Destroy();
+}
 // Called every frame
 void ABullet::Tick(float DeltaTime)
 {
