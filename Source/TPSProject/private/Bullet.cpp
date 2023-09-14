@@ -60,6 +60,13 @@ void ABullet::BeginPlay()
 		false
 	);
 }
+void ABullet::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+	if (PropertyChangedEvent.GetPropertyName() == TEXT("speed")) {
+		movementComp->InitialSpeed = speed;
+		movementComp->MaxSpeed = speed;
+	}
+}
+
 void ABullet::Die() {
 	Destroy();
 }

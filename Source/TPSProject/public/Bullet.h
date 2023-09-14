@@ -23,6 +23,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void Die();
+
 	UPROPERTY(VisibleAnywhere, Category = Movement)
 		class UProjectileMovementComponent* movementComp;
 	UPROPERTY(VisibleAnywhere, Category = Collision)
@@ -30,5 +32,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = BodyMesh)
 		class UStaticMeshComponent* bodyMeshComp;
 
-	void Die();
+	UPROPERTY(EditAnywhere, Category = Settings)
+		float speed = 5000;
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+
+
 };
