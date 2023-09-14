@@ -26,16 +26,25 @@ ATPSPlayer::ATPSPlayer()
 	tpsCamComp = CreateDefaultSubobject<UCameraComponent>(TEXT("TpsCamComp"));
 	tpsCamComp->SetupAttachment(springArmComp);
 	tpsCamComp->bUsePawnControlRotation = false;
-
+	// move
 	bUseControllerRotationYaw = true;
 	JumpMaxCount = 2;
-
+	// gun
 	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
 	gunMeshComp->SetupAttachment(GetMesh());
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempGunMesh(TEXT("SkeletalMesh'/Game/FPWeapon/Mesh/SK_FPGun.SK_FPGun'"));
 	if (TempGunMesh.Succeeded()) {
 		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
 		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
+	}
+	// sniper gun
+	sniperMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SniperMeshComp"));
+	sniperMeshComp->SetupAttachment(GetMesh());
+	ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("StaticMesh'/Game/SniperGun/sniper1.sniper1'"));
+	if (TempSniperMesh.Succeeded()) {
+		sniperMeshComp->SetStaticMesh(TempSniperMesh.Object);
+		sniperMeshComp->SetRelativeLocation(FVector(-22, 55, 120));
+		sniperMeshComp->SetRelativeScale3D(FVector(0.15f));
 	}
 }
 void ATPSPlayer::Turn(float value) {
