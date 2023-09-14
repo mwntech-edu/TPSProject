@@ -30,7 +30,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* springArmComp;
-	UPROPERTY(VisibleAnywhere, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* tpsCamComp;
 	UPROPERTY(EditAnywhere, Category = PlayerSetting)
 		float walkSpeed = 600;
