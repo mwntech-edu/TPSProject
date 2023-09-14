@@ -37,7 +37,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 		class USkeletalMeshComponent* gunMeshComp;
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
-		class UStaticMeshComponent* sniperMeshComp;
+		class UStaticMeshComponent* sniperGunComp;
 
 	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
 		TSubclassOf<class ABullet> bulletFactory;
@@ -50,4 +50,8 @@ public:
 	void InputVertical(float vlaue);
 	void InputJump();
 	void Move();
+
+	bool bUsingGrenadeGun = true;
+	void ChangeToGrenadeGun();
+	void ChangeToSniperGun();
 };

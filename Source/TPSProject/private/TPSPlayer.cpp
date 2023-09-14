@@ -38,14 +38,30 @@ ATPSPlayer::ATPSPlayer()
 		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
 	}
 	// sniper gun
-	sniperMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SniperMeshComp"));
-	sniperMeshComp->SetupAttachment(GetMesh());
+	sniperGunComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SniperMeshComp"));
+	sniperGunComp->SetupAttachment(GetMesh());
 	ConstructorHelpers::FObjectFinder<UStaticMesh> TempSniperMesh(TEXT("StaticMesh'/Game/SniperGun/sniper1.sniper1'"));
 	if (TempSniperMesh.Succeeded()) {
-		sniperMeshComp->SetStaticMesh(TempSniperMesh.Object);
-		sniperMeshComp->SetRelativeLocation(FVector(-22, 55, 120));
-		sniperMeshComp->SetRelativeScale3D(FVector(0.15f));
+		sniperGunComp->SetStaticMesh(TempSniperMesh.Object);
+		sniperGunComp->SetRelativeLocation(FVector(-22, 55, 120));
+		sniperGunComp->SetRelativeScale3D(FVector(0.15f));
 	}
+}
+void ATPSPlayer::ChangeToGrenadeGun() {
+	bUsingGrenadeGun = true;
+	sniperGunComp->SetVisibility(false);
+	gunMeshComp->SetVisibility(true);
+}
+void ATPSPlayer::ChangeToSniperGun() {
+	bUsingGrenadeGun = false;
+	sniperGunComp->SetVisibility(true);
+	gunMeshComp->SetVisibility(false);
+}
+// Called when the game starts or when spawned
+void ATPSPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+	ChangeToSniperGun();
 }
 void ATPSPlayer::Turn(float value) {
 	AddControllerYawInput(value);
@@ -72,6 +88,8 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ATPSPlayer::InputJump);
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
+	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &ATPSPlayer::ChangeToGrenadeGun);
+	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeToSniperGun);
 }
 void ATPSPlayer::InputFire() {
 	FTransform firePosition = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
@@ -93,12 +111,7 @@ void ATPSPlayer::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	Move();
 }
-// Called when the game starts or when spawned
-void ATPSPlayer::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
+
 
 
 
