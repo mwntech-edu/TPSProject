@@ -30,13 +30,16 @@ public:
 		class USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class UCameraComponent* tpsCamComp;
+	UPROPERTY(EditAnywhere, Category = PlayerSetting)
+		float walkSpeed = 600;
+	UPROPERTY(VisibleAnywhere, Category = GunMesh)
+		class USkeletalMeshComponent* gunMeshComp;
+
+	FVector direction;
 
 	void Turn(float value);
 	void LookUp(float value);
 
-	UPROPERTY(EditAnywhere, Category = PlayerSetting)
-		float walkSpeed = 600;
-	FVector direction;
 	void InputHorizontal(float value);
 	void InputVertical(float vlaue);
 	void InputJump();

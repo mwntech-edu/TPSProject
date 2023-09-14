@@ -29,6 +29,14 @@ ATPSPlayer::ATPSPlayer()
 
 	bUseControllerRotationYaw = true;
 	JumpMaxCount = 2;
+
+	gunMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("GunMeshComp"));
+	gunMeshComp->SetupAttachment(GetMesh());
+	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempGunMesh(TEXT("SkeletalMesh'/Game/FPWeapon/Mesh/SK_FPGun.SK_FPGun'"));
+	if (TempGunMesh.Succeeded()) {
+		gunMeshComp->SetSkeletalMesh(TempGunMesh.Object);
+		gunMeshComp->SetRelativeLocation(FVector(-14, 52, 120));
+	}
 }
 void ATPSPlayer::Turn(float value) {
 	AddControllerYawInput(value);
