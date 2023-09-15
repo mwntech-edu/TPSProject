@@ -54,4 +54,10 @@ public:
 	bool bUsingGrenadeGun = true;
 	void ChangeToGrenadeGun();
 	void ChangeToSniperGun();
+
+	void SniperAim();
+	bool bSniperAim = false;
+	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
+		TSubclassOf<class UUserWidget> sniperUIFactory;
+	class UUserWidget* _sniperUI;
 };

@@ -5,6 +5,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Bullet.h"
+#include "Blueprint/UserWidget.h"
+
 // Sets default values
 ATPSPlayer::ATPSPlayer()
 {
@@ -46,6 +48,7 @@ ATPSPlayer::ATPSPlayer()
 		sniperGunComp->SetRelativeLocation(FVector(-22, 55, 120));
 		sniperGunComp->SetRelativeScale3D(FVector(0.15f));
 	}
+
 }
 void ATPSPlayer::ChangeToGrenadeGun() {
 	bUsingGrenadeGun = true;
@@ -61,6 +64,7 @@ void ATPSPlayer::ChangeToSniperGun() {
 void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);
 	ChangeToSniperGun();
 }
 void ATPSPlayer::Turn(float value) {
@@ -90,7 +94,23 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATPSPlayer::InputFire);
 	PlayerInputComponent->BindAction(TEXT("GrenadeGun"), IE_Pressed, this, &ATPSPlayer::ChangeToGrenadeGun);
 	PlayerInputComponent->BindAction(TEXT("SniperGun"), IE_Pressed, this, &ATPSPlayer::ChangeToSniperGun);
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Pressed, this, &ATPSPlayer::SniperAim);
+	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
 }
+void ATPSPlayer::SniperAim() {
+	if (bUsingGrenadeGun) { return;  }
+	if (bSniperAim == false) {
+		bSniperAim = true;
+		_sniperUI->AddToViewport();
+		tpsCamComp->SetFieldOfView(45.f);
+	}
+	else {
+		bSniperAim = false;
+		_sniperUI->RemoveFromParent();
+		tpsCamComp->SetFieldOfView(90.f);
+	}
+}
+
 void ATPSPlayer::InputFire() {
 	FTransform firePosition = gunMeshComp->GetSocketTransform(TEXT("FirePosition"));
 	GetWorld()->SpawnActor<ABullet>(bulletFactory, firePosition);
