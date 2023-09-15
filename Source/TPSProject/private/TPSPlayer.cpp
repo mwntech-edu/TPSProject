@@ -128,6 +128,11 @@ void ATPSPlayer::InputFire() {
 			/*FTransform bulletTrans;
 			bulletTrans.SetLocation(hitInfo.ImpactPoint);*/
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), bulletEffectFactory, hitInfo.ImpactPoint);
+			auto hitComp = hitInfo.GetComponent();
+			if (hitComp && hitComp->IsSimulatingPhysics()) {
+				FVector force = -hitInfo.ImpactNormal * hitComp->GetMass() * 500000;
+				hitComp->AddForce(force);
+			}
 		}
 	}
 	
