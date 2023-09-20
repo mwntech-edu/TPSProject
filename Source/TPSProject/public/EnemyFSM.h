@@ -39,4 +39,8 @@ public:
 	void AttackState();
 	void DamageState();
 	void DieState();
+
+	UPROPERTY(EditDefaultsOnly, Category = FSM)
+		float idleDelayTime = 2;
+	float currentTime = 0;
 };

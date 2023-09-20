@@ -51,8 +51,34 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 		break;
 	}
 }
-void UEnemyFSM::IdleState() {}
-void UEnemyFSM::MoveState() {}
-void UEnemyFSM::AttackState() {}
-void UEnemyFSM::DamageState() {}
-void UEnemyFSM::DieState() {}
+void UEnemyFSM::IdleState() {
+	// (Action) Play Idle Animation
+	// (Event check)
+	currentTime += GetWorld()->DeltaTimeSeconds;
+	if (currentTime > idleDelayTime){
+		// (State Transition) 
+		mState = EEnemyState::Move;
+
+		currentTime = 0;
+	}
+}
+void UEnemyFSM::MoveState() {
+	// (Action) 
+	// (Event check)
+	// (State Transition) mState = EEnemyState::
+}
+void UEnemyFSM::AttackState() {
+	// (Action) 
+	// (Event check)
+	// (State Transition) mState = EEnemyState::
+}
+void UEnemyFSM::DamageState() {
+	// (Action) 
+	// (Event check)
+	// (State Transition) mState = EEnemyState::
+}
+void UEnemyFSM::DieState() {
+	// (Action) 
+	// (Event check)
+	// (State Transition) mState = EEnemyState::
+}
