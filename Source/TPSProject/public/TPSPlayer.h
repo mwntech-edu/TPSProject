@@ -60,6 +60,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
 		TSubclassOf<class UUserWidget> sniperUIFactory;
 	class UUserWidget* _sniperUI;
+
 	UPROPERTY(EditAnywhere, Category = BulletEffect)
 		class UParticleSystem* bulletEffectFactory;
+
+	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
+		TSubclassOf<class UUserWidget> crosshairUIFactory;
+	class UUserWidget* _crosshairUI;
+	
 };

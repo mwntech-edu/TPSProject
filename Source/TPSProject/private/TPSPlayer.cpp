@@ -66,6 +66,9 @@ void ATPSPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	_sniperUI = CreateWidget(GetWorld(), sniperUIFactory);
+	_crosshairUI = CreateWidget(GetWorld(), crosshairUIFactory);
+	_crosshairUI->AddToViewport();
+
 	ChangeToSniperGun();
 }
 void ATPSPlayer::Turn(float value) {
@@ -104,11 +107,13 @@ void ATPSPlayer::SniperAim() {
 		bSniperAim = true;
 		_sniperUI->AddToViewport();
 		tpsCamComp->SetFieldOfView(45.f);
+		_crosshairUI->RemoveFromParent();
 	}
 	else {
 		bSniperAim = false;
 		_sniperUI->RemoveFromParent();
 		tpsCamComp->SetFieldOfView(90.f);
+		_crosshairUI->AddToViewport();
 	}
 }
 
@@ -135,8 +140,8 @@ void ATPSPlayer::InputFire() {
 			}
 		}
 	}
-	
 }
+
 void ATPSPlayer::Move() {
 	direction = FTransform(GetControlRotation()).TransformVector(direction);
 	/*FVector P0 = GetActorLocation();
