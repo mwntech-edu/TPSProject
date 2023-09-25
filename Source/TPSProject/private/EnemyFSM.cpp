@@ -6,6 +6,7 @@
 #include "TPSPlayer.h"
 #include <Kismet/GameplayStatics.h>
 #include "TPSProject.h"
+#include <Components/CapsuleComponent.h>
 
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
@@ -106,10 +107,16 @@ void UEnemyFSM::DamageState() {
 }
 void UEnemyFSM::DieState() {
 	// (Action) 
+	FVector P0 = me->GetActorLocation();
+	FVector vt = FVector::DownVector * dieSpeed * GetWorld()->DeltaTimeSeconds;
+	FVector P = P0 + vt;
+	me->SetActorLocation(P);
+	if (P.Z < -200.f) {
+		me->Destroy();
+	}
 	// (Event check)
 	// (State Transition) mState = EEnemyState::
 }
-
 void UEnemyFSM::OnDamageProcess() {
 	//me->Destroy();
 	hp--;
@@ -117,5 +124,6 @@ void UEnemyFSM::OnDamageProcess() {
 		mState = EEnemyState::Damage;
 	}else {
 		mState = EEnemyState::Die;
+		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }

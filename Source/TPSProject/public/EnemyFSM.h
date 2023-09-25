@@ -56,4 +56,6 @@ public:
 	int32 hp = 3;
 	UPROPERTY(EditAnywhere, Category = FSM)
 		float damageDelayTime = 2.0f;
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float dieSpeed = 50.f;
 };
