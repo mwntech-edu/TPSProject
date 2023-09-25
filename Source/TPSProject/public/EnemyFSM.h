@@ -43,4 +43,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = FSM)
 		float idleDelayTime = 2;
 	float currentTime = 0;
+	UPROPERTY(VisibleAnywhere, Category = FSM)
+		class ATPSPlayer* target;
+	UPROPERTY()
+		class AEnemy* me;
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float attackRange = 150.0f;
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float attackDelayTime = 2.0f;
 };
