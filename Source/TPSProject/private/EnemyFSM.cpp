@@ -96,11 +96,26 @@ void UEnemyFSM::AttackState() {
 }
 void UEnemyFSM::DamageState() {
 	// (Action) 
+	currentTime += GetWorld()->DeltaTimeSeconds;
 	// (Event check)
-	// (State Transition) mState = EEnemyState::
+	if (currentTime > damageDelayTime) {
+		// (State Transition) 
+		mState = EEnemyState::Idle;
+		currentTime = 0;
+	}
 }
 void UEnemyFSM::DieState() {
 	// (Action) 
 	// (Event check)
 	// (State Transition) mState = EEnemyState::
+}
+
+void UEnemyFSM::OnDamageProcess() {
+	//me->Destroy();
+	hp--;
+	if (hp > 0) {
+		mState = EEnemyState::Damage;
+	}else {
+		mState = EEnemyState::Die;
+	}
 }

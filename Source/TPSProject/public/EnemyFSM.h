@@ -51,4 +51,9 @@ public:
 		float attackRange = 150.0f;
 	UPROPERTY(EditAnywhere, Category = FSM)
 		float attackDelayTime = 2.0f;
+
+	void OnDamageProcess();
+	int32 hp = 3;
+	UPROPERTY(EditAnywhere, Category = FSM)
+		float damageDelayTime = 2.0f;
 };
