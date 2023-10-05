@@ -19,9 +19,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim)
 		float direction = 0;
 
-
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim)
 		bool isInAir = false;
+	UPROPERTY(EditDefaultsOnly, Category = PlayeAnim)
+		class UAnimMontage* attackAnimMontage;
+	void PlayAttackAnim();
 };
