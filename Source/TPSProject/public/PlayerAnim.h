@@ -18,4 +18,6 @@ public:
 		float speed = 0;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = PlayerAnim)
+		bool isInAir = false;
 };
