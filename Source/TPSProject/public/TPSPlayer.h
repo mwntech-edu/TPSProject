@@ -32,8 +32,12 @@ public:
 		class USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* tpsCamComp;
+
 	UPROPERTY(EditAnywhere, Category = PlayerSetting)
-		float walkSpeed = 600;
+		float walkSpeed = 200;
+	UPROPERTY(EditAnywhere, Category = PlayerSetting)
+		float runSpeed = 600;
+
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 		class USkeletalMeshComponent* gunMeshComp;
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
@@ -50,6 +54,7 @@ public:
 	void InputVertical(float vlaue);
 	void InputJump();
 	void Move();
+	void InputRun();
 
 	bool bUsingGrenadeGun = true;
 	void ChangeToGrenadeGun();
