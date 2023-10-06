@@ -55,7 +55,12 @@ ATPSPlayer::ATPSPlayer()
 		sniperGunComp->SetRelativeRotation(FRotator(0, 90, 0));
 		sniperGunComp->SetRelativeScale3D(FVector(0.15f));
 	}
+	ConstructorHelpers::FObjectFinder<USoundBase> tempSound(
+		TEXT("SoundWave'/Game/SniperGun/Rifle.Rifle'"));
 
+	if (tempSound.Succeeded()) {
+		bulletSound = tempSound.Object;
+	}
 }
 void ATPSPlayer::ChangeToGrenadeGun() {
 	bUsingGrenadeGun = true;
@@ -134,6 +139,8 @@ void ATPSPlayer::SniperAim() {
 }
 
 void ATPSPlayer::InputFire() {
+	UGameplayStatics::PlaySound2D(GetWorld(), bulletSound);
+
 	auto controller = GetWorld()->GetFirstPlayerController();
 	controller->PlayerCameraManager->StartCameraShake(cameraShake);
 
