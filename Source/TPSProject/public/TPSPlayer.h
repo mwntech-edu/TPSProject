@@ -72,5 +72,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = SniperUI)
 		TSubclassOf<class UUserWidget> crosshairUIFactory;
 	class UUserWidget* _crosshairUI;
+
+	UPROPERTY(EditDefaultsOnly, Category = CameraMotion)
+		TSubclassOf<class UCameraShakeBase> cameraShake;
+
 	
 };

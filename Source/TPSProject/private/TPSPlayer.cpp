@@ -134,6 +134,9 @@ void ATPSPlayer::SniperAim() {
 }
 
 void ATPSPlayer::InputFire() {
+	auto controller = GetWorld()->GetFirstPlayerController();
+	controller->PlayerCameraManager->StartCameraShake(cameraShake);
+
 	auto anim = Cast<UPlayerAnim>(GetMesh()->GetAnimInstance());
 	anim->PlayAttackAnim();
 
