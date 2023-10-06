@@ -18,6 +18,12 @@ AEnemy::AEnemy()
 		GetMesh()->SetRelativeScale3D(FVector(0.84f));
 	}
 	fsm = CreateDefaultSubobject<UEnemyFSM>(TEXT("FSM"));
+
+	ConstructorHelpers::FClassFinder<UAnimInstance> tempClass(TEXT("AnimBlueprint'/Game/Blueprints/ABP_Enemy.ABP_Enemy_C'"));
+	if (tempClass.Succeeded()) {
+		GetMesh()->SetAnimInstanceClass(tempClass.Class);
+	}
+
 }
 
 // Called when the game starts or when spawned
