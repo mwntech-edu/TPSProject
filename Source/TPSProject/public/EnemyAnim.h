@@ -17,5 +17,7 @@ class TPSPROJECT_API UEnemyAnim : public UAnimInstance
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = FSM)
 		EEnemyState animState;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = FSM)
+		bool bAttackPlay = false;
 
 };
