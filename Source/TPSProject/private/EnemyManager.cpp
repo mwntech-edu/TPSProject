@@ -25,6 +25,7 @@ void AEnemyManager::CreateEnemy() {
 
 	float createTime = FMath::RandRange(minTime, maxTime);
 	GetWorld()->GetTimerManager().SetTimer(spawnTimerHandle, this, &AEnemyManager::CreateEnemy, createTime);
+	//GetWorld()->GetTimerManager().PauseTimer(spawnTimerHandle);
 }
 
 void AEnemyManager::FindSpawnPoints() {
