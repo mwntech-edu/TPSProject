@@ -66,6 +66,7 @@ void UEnemyFSM::MoveState() {
 	// (Event check)
 	if (dir.Size() < attackRange) {
 		// (State Transition) 
+		ai->StopMovement();
 		mState = EEnemyState::Attack;
 		anim->animState = mState;
 		anim->bAttackPlay = true;
@@ -103,19 +104,16 @@ void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	}
 }
 void UEnemyFSM::IdleState() {
-	// (Action) Play Idle Animation
-	// (Event check)
 	currentTime += GetWorld()->DeltaTimeSeconds;
 	if (currentTime > idleDelayTime){
 		// (State Transition) 
 		mState = EEnemyState::Move;
-
 		currentTime = 0;
 		anim->animState = mState;
+		GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos);
 	}
 }
 void UEnemyFSM::AttackState() {
-	// (Action) 
 	currentTime += GetWorld()->DeltaTimeSeconds;
 	if (currentTime > attackDelayTime) {
 		PRINT_LOG(TEXT("Attack!!"));
@@ -128,6 +126,7 @@ void UEnemyFSM::AttackState() {
 		// (State Transition) 
 		mState = EEnemyState::Move;
 		anim->animState = mState;
+		GetRandomPositionInNavMesh(me->GetActorLocation(), 500, randomPos);
 	}
 }
 void UEnemyFSM::DamageState() {
@@ -144,6 +143,7 @@ void UEnemyFSM::DamageState() {
 
 void UEnemyFSM::OnDamageProcess() {
 	//me->Destroy();
+	ai->StopMovement();
 	hp--;
 	if (hp > 0) {
 		mState = EEnemyState::Damage;
