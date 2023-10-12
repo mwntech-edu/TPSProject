@@ -32,4 +32,5 @@ public:
 		TSubclassOf<class AEnemy> enemyFactory;
 	FTimerHandle spawnTimerHandle;
 	void CreateEnemy();
+	void FindSpawnPoints();
 };
