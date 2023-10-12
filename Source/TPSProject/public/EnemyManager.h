@@ -22,5 +22,14 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	UPROPERTY(EditAnywhere, Category = SpawnSettings)
+		float minTime = 1;
+	UPROPERTY(EditAnywhere, Category = SpawnSettings)
+		float maxTime = 5;
+	UPROPERTY(EditAnywhere, Category = SpawnSettings)
+		TArray<class AActor*> spawnPoints;
+	UPROPERTY(EditAnywhere, Category = SpawnSettings)
+		TSubclassOf<class AEnemy> enemyFactory;
+	FTimerHandle spawnTimerHandle;
+	void CreateEnemy();
 };
