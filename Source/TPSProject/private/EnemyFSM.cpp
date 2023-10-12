@@ -114,18 +114,7 @@ void UEnemyFSM::DamageState() {
 		anim->animState = mState;
 	}
 }
-void UEnemyFSM::DieState() {
-	// (Action) 
-	FVector P0 = me->GetActorLocation();
-	FVector vt = FVector::DownVector * dieSpeed * GetWorld()->DeltaTimeSeconds;
-	FVector P = P0 + vt;
-	me->SetActorLocation(P);
-	if (P.Z < -200.f) {
-		me->Destroy();
-	}
-	// (Event check)
-	// (State Transition) mState = EEnemyState::
-}
+
 void UEnemyFSM::OnDamageProcess() {
 	//me->Destroy();
 	hp--;
@@ -139,6 +128,24 @@ void UEnemyFSM::OnDamageProcess() {
 	}else {
 		mState = EEnemyState::Die;
 		me->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		anim->PlayDamageAnim(FName(TEXT("Die")));
 	}
 	anim->animState = mState;
+}
+
+void UEnemyFSM::DieState() {
+	if (anim->bDieDone == false) {
+		return;
+	}
+
+	// (Action) 
+	FVector P0 = me->GetActorLocation();
+	FVector vt = FVector::DownVector * dieSpeed * GetWorld()->DeltaTimeSeconds;
+	FVector P = P0 + vt;
+	me->SetActorLocation(P);
+	if (P.Z < -200.f) {
+		me->Destroy();
+	}
+	// (Event check)
+	// (State Transition) mState = EEnemyState::
 }
