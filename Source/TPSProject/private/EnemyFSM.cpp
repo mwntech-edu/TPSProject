@@ -8,6 +8,7 @@
 #include "TPSProject.h"
 #include <Components/CapsuleComponent.h>
 #include "EnemyAnim.h"
+#include <AIController.h>
 
 // Sets default values for this component's properties
 UEnemyFSM::UEnemyFSM()
@@ -30,8 +31,24 @@ void UEnemyFSM::BeginPlay()
 	// get self
 	me = Cast<AEnemy>(GetOwner());
 	anim = Cast<UEnemyAnim>(me->GetMesh()->GetAnimInstance());
-}
 
+	ai = Cast<AAIController>(me->GetController());
+}
+void UEnemyFSM::MoveState() {
+	// (Action) 
+	FVector destination = target->GetActorLocation();
+	FVector dir = destination - me->GetActorLocation();
+	//me->AddMovementInput(dir.GetSafeNormal());
+	ai->MoveToLocation(destination);
+	// (Event check)
+	if (dir.Size() < attackRange) {
+		// (State Transition) 
+		mState = EEnemyState::Attack;
+		anim->animState = mState;
+		anim->bAttackPlay = true;
+		currentTime = attackDelayTime;
+	}
+}
 
 // Called every frame
 void UEnemyFSM::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -70,21 +87,6 @@ void UEnemyFSM::IdleState() {
 
 		currentTime = 0;
 		anim->animState = mState;
-	}
-}
-void UEnemyFSM::MoveState() {
-	// (Action) 
-	FVector destination = target->GetActorLocation();
-	FVector dir = destination - me->GetActorLocation();
-	me->AddMovementInput(dir.GetSafeNormal());
-
-	// (Event check)
-	if (dir.Size() < attackRange) {
-		// (State Transition) 
-		mState = EEnemyState::Attack;
-		anim->animState = mState;
-		anim->bAttackPlay = true;
-		currentTime = attackDelayTime;
 	}
 }
 void UEnemyFSM::AttackState() {
