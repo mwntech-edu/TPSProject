@@ -22,8 +22,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-	FVector direction;
-
 	UPROPERTY(VisibleAnywhere, Category = Component)
 		class UPlayerBaseComponent* playerMove;
 
@@ -31,11 +29,6 @@ public:
 		class USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* tpsCamComp;
-
-	UPROPERTY(EditAnywhere, Category = PlayerSetting)
-		float walkSpeed = 200;
-	UPROPERTY(EditAnywhere, Category = PlayerSetting)
-		float runSpeed = 600;
 
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 		class USkeletalMeshComponent* gunMeshComp;
@@ -46,12 +39,6 @@ public:
 		TSubclassOf<class ABullet> bulletFactory;
 
 	void InputFire();
-	
-	void InputHorizontal(float value);
-	void InputVertical(float vlaue);
-	void InputJump();
-	void Move();
-	void InputRun();
 
 	bool bUsingGrenadeGun = true;
 	void ChangeToGrenadeGun();
