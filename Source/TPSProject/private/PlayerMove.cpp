@@ -9,12 +9,10 @@ void UPlayerMove::BeginPlay() {
 	Super::BeginPlay();
 	moveComp->MaxWalkSpeed = walkSpeed;
 }
-
 void UPlayerMove::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	Move();
 }
-
 void UPlayerMove::Turn(float value) {
 	me->AddControllerYawInput(value);
 }
