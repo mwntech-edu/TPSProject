@@ -10,10 +10,9 @@
 #include "EnemyFSM.h"
 #include <GameFramework/CharacterMovementComponent.h>
 #include "PlayerAnim.h"
+#include "PlayerMove.h"
 // Sets default values
-ATPSPlayer::ATPSPlayer()
-{
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ATPSPlayer::ATPSPlayer(){
 	PrimaryActorTick.bCanEverTick = true;
 
 	ConstructorHelpers::FObjectFinder<USkeletalMesh> TempMesh(TEXT("SkeletalMesh'/Game/AnimStarterPack/UE4_Mannequin/Mesh/SK_Mannequin.SK_Mannequin'"));
@@ -61,7 +60,9 @@ ATPSPlayer::ATPSPlayer()
 	if (tempSound.Succeeded()) {
 		bulletSound = tempSound.Object;
 	}
-}
+	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
+
+}// End of TPSPlayer()
 void ATPSPlayer::ChangeToGrenadeGun() {
 	bUsingGrenadeGun = true;
 	sniperGunComp->SetVisibility(false);
@@ -92,10 +93,9 @@ void ATPSPlayer::InputRun() {
 // Called to bind functionality to input
 void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	playerMove->SetupInputBinding(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction(TEXT("Run"), IE_Pressed, this, &ATPSPlayer::InputRun);
-	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATPSPlayer::Turn);
-	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ATPSPlayer::LookUp);
 	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &ATPSPlayer::InputHorizontal);
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &ATPSPlayer::InputVertical);
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ATPSPlayer::InputJump);
@@ -106,12 +106,6 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction(TEXT("Sniper"), IE_Released, this, &ATPSPlayer::SniperAim);
 }
 
-void ATPSPlayer::Turn(float value) {
-	AddControllerYawInput(value);
-}
-void ATPSPlayer::LookUp(float value) {
-	AddControllerPitchInput(value);
-}
 void ATPSPlayer::InputHorizontal(float value) {
 	direction.Y = value;
 }

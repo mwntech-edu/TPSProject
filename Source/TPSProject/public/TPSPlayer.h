@@ -10,16 +10,12 @@ UCLASS()
 class TPSPROJECT_API ATPSPlayer : public ACharacter
 {
 	GENERATED_BODY()
-
-public:
-	// Sets default values for this character's properties
-	ATPSPlayer();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
 public:	
+	ATPSPlayer();
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -27,6 +23,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	FVector direction;
+
+	UPROPERTY(VisibleAnywhere, Category = Component)
+		class UPlayerBaseComponent* playerMove;
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* springArmComp;
@@ -47,9 +46,7 @@ public:
 		TSubclassOf<class ABullet> bulletFactory;
 
 	void InputFire();
-	void Turn(float value);
-	void LookUp(float value);
-
+	
 	void InputHorizontal(float value);
 	void InputVertical(float vlaue);
 	void InputJump();
