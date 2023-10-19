@@ -17,6 +17,13 @@ public:
 	UPlayerFire();
 	virtual void BeginPlay() override;
 	virtual void SetupInputBinding(class UInputComponent* PlayerInputComponent) override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+		class UCameraComponent* tpsCamComp;
+
+	UPROPERTY(VisibleAnywhere, Category = GunMesh)
+		class USkeletalMeshComponent* gunMeshComp;
+	UPROPERTY(VisibleAnywhere, Category = GunMesh)
+		class UStaticMeshComponent* sniperGunComp;
 
 	UPROPERTY(EditDefaultsOnly, Category = BulletFactory)
 		TSubclassOf<class ABullet> bulletFactory;

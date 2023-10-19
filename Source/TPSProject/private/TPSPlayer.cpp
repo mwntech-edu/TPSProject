@@ -3,13 +3,7 @@
 
 #include "TPSPlayer.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
-#include "Bullet.h"
-#include <Blueprint/UserWidget.h>
-#include <Kismet/GameplayStatics.h>
-#include "EnemyFSM.h"
-#include <GameFramework/CharacterMovementComponent.h>
-#include "PlayerAnim.h"
+#include <Camera/CameraComponent.h>
 #include "PlayerMove.h"
 #include "PlayerFire.h"
 // Sets default values
@@ -66,38 +60,11 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	playerFire->SetupInputBinding(PlayerInputComponent);
 }
 
-
-void ATPSPlayer::ChangeToGrenadeGun() {
-	bUsingGrenadeGun = true;
-	sniperGunComp->SetVisibility(false);
-	gunMeshComp->SetVisibility(true);
-}
-void ATPSPlayer::ChangeToSniperGun() {
-	bUsingGrenadeGun = false;
-	sniperGunComp->SetVisibility(true);
-	gunMeshComp->SetVisibility(false);
-}
 // Called when the game starts or when spawned
 void ATPSPlayer::BeginPlay(){
 	Super::BeginPlay();
 	//GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
 
-}
-
-void ATPSPlayer::SniperAim() {
-	if (bUsingGrenadeGun) { return;  }
-	if (bSniperAim == false) {
-		bSniperAim = true;
-		_sniperUI->AddToViewport();
-		tpsCamComp->SetFieldOfView(45.f);
-		_crosshairUI->RemoveFromParent();
-	}
-	else {
-		bSniperAim = false;
-		_sniperUI->RemoveFromParent();
-		tpsCamComp->SetFieldOfView(90.f);
-		_crosshairUI->AddToViewport();
-	}
 }
 
 // Called every frame

@@ -29,6 +29,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		class USpringArmComponent* springArmComp;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* tpsCamComp;
 
