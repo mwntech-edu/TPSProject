@@ -42,4 +42,10 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = GunMesh)
 		class UStaticMeshComponent* sniperGunComp;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
+		int32 hp;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = Health)
+		int32 initialHp = 10;
+	UFUNCTION(BlueprintCallable, Category = Health)
+		void OnHitEvent();
 };

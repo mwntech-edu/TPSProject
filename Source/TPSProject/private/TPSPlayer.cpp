@@ -6,6 +6,8 @@
 #include <Camera/CameraComponent.h>
 #include "PlayerMove.h"
 #include "PlayerFire.h"
+#include "TPSProject.h"
+
 // Sets default values
 ATPSPlayer::ATPSPlayer(){
 	PrimaryActorTick.bCanEverTick = true;
@@ -67,7 +69,15 @@ void ATPSPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 void ATPSPlayer::BeginPlay(){
 	Super::BeginPlay();
 	//GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
+	hp = initialHp;
+}
 
+void ATPSPlayer::OnHitEvent() {
+	PRINT_LOG(TEXT("Damaged !!!"));
+	hp--;
+	if (hp <= 0) {
+		PRINT_LOG(TEXT("Player is dead!"));
+	}
 }
 
 // Called every frame
