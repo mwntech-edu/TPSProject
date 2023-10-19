@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "TPSPlayer.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FInputBindingDelegate, class UInputComponent*);
+
+
 UCLASS()
 class TPSPROJECT_API ATPSPlayer : public ACharacter
 {
@@ -14,6 +17,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 public:	
+	FInputBindingDelegate onInputBindingDelegate;
 	ATPSPlayer();
 
 	// Called every frame

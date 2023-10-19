@@ -7,9 +7,10 @@
 #include "PlayerFire.generated.h"
 
 /**
- * 
+ *
  */
-UCLASS()
+
+UCLASS(ClassGroup=(PlayerComponent), meta = (BlueprintSpawnableComponent))
 class TPSPROJECT_API UPlayerFire : public UPlayerBaseComponent
 {
 	GENERATED_BODY()

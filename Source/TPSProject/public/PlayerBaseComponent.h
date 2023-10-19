@@ -17,7 +17,9 @@ class TPSPROJECT_API UPlayerBaseComponent : public UActorComponent
 public:	
 	UPlayerBaseComponent() {
 		PrimaryComponentTick.bCanEverTick = false;
+		bWantsInitializeComponent = true;
 	}
+	virtual void InitializeComponent() override;
 	UPROPERTY()
 		ATPSPlayer* me;
 	UPROPERTY()
