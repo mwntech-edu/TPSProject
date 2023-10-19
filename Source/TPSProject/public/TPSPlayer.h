@@ -48,4 +48,6 @@ public:
 		int32 initialHp = 10;
 	UFUNCTION(BlueprintCallable, Category = Health)
 		void OnHitEvent();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = Health)
+		void OnGameOver();
 };

@@ -7,6 +7,8 @@
 #include "PlayerMove.h"
 #include "PlayerFire.h"
 #include "TPSProject.h"
+#include <Kismet/GameplayStatics.h>
+
 
 // Sets default values
 ATPSPlayer::ATPSPlayer(){
@@ -77,7 +79,11 @@ void ATPSPlayer::OnHitEvent() {
 	hp--;
 	if (hp <= 0) {
 		PRINT_LOG(TEXT("Player is dead!"));
+		OnGameOver();
 	}
+}
+void ATPSPlayer::OnGameOver_Implementation() {
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
 
 // Called every frame
